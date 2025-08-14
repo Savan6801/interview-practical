@@ -1,0 +1,30 @@
+CREATE DATABASE IF NOT EXISTS practical;
+USE practical;
+
+CREATE TABLE admins (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        name VARCHAR(100),
+                        email VARCHAR(100) UNIQUE,
+                        image VARCHAR(255),
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+    CREATE TABLE users (
+                           id INT AUTO_INCREMENT PRIMARY KEY,
+                           admin_id INT,
+                           name VARCHAR(100),
+                           email VARCHAR(100) UNIQUE,
+                           image VARCHAR(255),
+                           added_by_admin TINYINT(1) DEFAULT 0,
+                           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                           FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE
+    );
+
+CREATE TABLE user_documents (
+                                id INT AUTO_INCREMENT PRIMARY KEY,
+                                user_id INT,
+                                file_path VARCHAR(255),
+                                file_type ENUM('image','pdf','mixed'),
+                                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
