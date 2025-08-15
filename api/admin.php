@@ -19,7 +19,7 @@ class Admin
             return ["error" => mysqli_error($this->conn)];
         }
         $admins = [];
-        while ($row = mysqli_fetch_assoc($result)) {
+        while ($row = mysqli_fetch_assoc(mysqli_query($this->conn, $query))) {
             $admins[] = $row;
         }
         return $admins;
